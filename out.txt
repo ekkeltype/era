@@ -1,1 +1,113 @@
-test
+1[Arcane Crystal] at 57g95s0c
+3 x 1[Arcane Crystal] at 70g0c
+7 x 1[Black Lotus] at 27g0c
+2 x 1[Black Lotus] at 27g15s0c
+1[Black Lotus] at 29g79s97c
+1[Black Lotus] at 28g30s99c
+2 x 1[Black Lotus] at 40g0c
+1[Black Lotus] at 45g15s0c
+1[Black Lotus] at 47g40s50c
+20[Blindweed] at 1g75s62c
+20[Blindweed] at 1g99s94c
+1[Bloodscalp Coin] at 2g84s5c
+2 x 2[Blue Hakkari Bijou] at 8g55s0c
+2[Bronze Hakkari Bijou] at 8g55s0c
+4 x 20[Dense Stone] at 48s75c
+5[Dense Stone] at 40s0c
+2 x 10[Elemental Earth] at 4g75s0c
+10[Elemental Earth] at 5g0c
+1[Elemental Earth] at 5g0c
+10[Elemental Earth] at 5g56s0c
+10[Elemental Earth] at 5g56s0c
+3 x 10[Elemental Earth] at 5g99s0c
+1[Elemental Earth] at 6g5s0c
+2 x 1[Elixir of Poison Resistance] at 10g99s99c
+3 x 1[Elixir of Poison Resistance] at 11g98s0c
+5 x 1[Elixir of Poison Resistance] at 11g99s99c
+4 x 1[Elixir of Poison Resistance] at 14g80s5c
+4 x 5[Elixir of the Mongoose] at 6g0c
+5[Elixir of the Mongoose] at 6g0c
+1[Expert Goldminer's Helmet] at 260g63s30c
+1[Flask of the Titans] at 170g0c
+1[Flask of the Titans] at 170g75s0c
+1[Flask of the Titans] at 171g0c
+2 x 1[Flask of the Titans] at 171g75s0c
+3 x 20[Ghost Mushroom] at 2g71s69c
+1[Ghost Mushroom] at 2g71s70c
+19 x 1[Ghost Mushroom] at 2g87s4c
+20[Ghost Mushroom] at 2g75s30c
+2 x 1[Ghost Mushroom] at 3g19s63c
+4 x 1[Ghost Mushroom] at 3g95s99c
+8 x 1[Ghost Mushroom] at 3g50s0c
+5[Greater Arcane Protection Potion] at 7g60s0c
+2 x 1[Greater Arcane Protection Potion] at 5g0c
+5 x 1[Greater Arcane Protection Potion] at 4g87s50c
+2[Gromsblood] at 1g78s82c
+20[Gromsblood] at 1g85s0c
+20 x 20[Gromsblood] at 2g14s1c
+20[Gromsblood] at 2g44s44c
+13 x 1[Gromsblood] at 2g73s59c
+20[Gromsblood] at 2g93s75c
+1[Gurubashi Coin] at 2g83s10c
+1[Gurubashi Coin] at 2g84s99c
+1[Hakkari Coin] at 2g84s5c
+1[Hakkari Coin] at 2g86s0c
+5 x 1[Hakkari Coin] at 2g76s23c
+5[Hakkari Coin] at 2g76s23c
+1[Large Venom Sac] at 4g73s10c
+5 x 1[Lesser Invisibility Potion] at 3g49s50c
+1[Libram of Constitution] at 200g0c
+1[Libram of Constitution] at 150g1s0c
+2 x 1[Libram of Rapidity] at 28g40s50c
+1[Libram of Rapidity] at 30g0c
+1[Libram of Rapidity] at 30g30s50c
+1[Libram of Rapidity] at 35g0c
+1[Libram of Rapidity] at 50g0c
+1[Libram of Rapidity] at 77g1s0c
+1[Libram of Voracity] at 550g0c
+20 x 1[Living Essence] at 15g69s60c
+1[Living Essence] at 16g10s25c
+1[Living Essence] at 16g98s99c
+15 x 1[Living Essence] at 15g7s50c
+2 x 1[Living Essence] at 20g0c
+2[Purple Hakkari Bijou] at 8g55s0c
+2 x 5[Razzashi Coin] at 2g66s99c
+5 x 1[Razzashi Coin] at 2g67s0c
+1[Recipe: Flask of Supreme Power] at 1199g50s0c
+1[Recipe: Greater Arcane Protection Potion] at 50g0c
+1[Recipe: Greater Arcane Protection Potion] at 124g75s16c
+1[Recipe: Greater Arcane Protection Potion] at 149g99s99c
+2 x 2[Red Hakkari Bijou] at 8g55s0c
+4 x 1[Red Hakkari Bijou] at 9g98s99c
+17 x 1[Red Hakkari Bijou] at 9g49s5c
+1[Righteous Orb] at 80g10s0c
+1[Righteous Orb] at 88g0c
+4 x 1[Righteous Orb] at 96g99s99c
+1[Sandfury Coin] at 2g35s60c
+1[Sandworm Meat] at 2g80s5c
+5[Sandworm Meat] at 2g80s4c
+4[Silver Hakkari Bijou] at 8g31s25c
+14 x 1[Silver Hakkari Bijou] at 9g30s5c
+2 x 1[Skullsplitter Coin] at 2g64s10c
+1[Skullsplitter Coin] at 2g25s87c
+1[Skullsplitter Coin] at 2g31s66c
+1[Skullsplitter Coin] at 2g31s66c
+4 x 5[Smoked Desert Dumplings] at 2g43s75c
+4 x 1[Stonescale Eel] at 2g7s58c
+6 x 1[Stonescale Eel] at 2g12s90c
+4 x 1[Stonescale Eel] at 1g79s29c
+14 x 1[Stonescale Eel] at 1g79s29c
+22 x 1[Stonescale Eel] at 1g79s56c
+20[Stonescale Eel] at 2g50s0c
+7 x 20[Stonescale Eel] at 2g45s15c
+1[Vilebranch Coin] at 2g16s75c
+2 x 1[Vilebranch Coin] at 2g22s30c
+1[Vilebranch Coin] at 2g24s16c
+1[Vilebranch Coin] at 2g69s92c
+5[Vilebranch Coin] at 2g60s69c
+5 x 1[Vilebranch Coin] at 2g60s69c
+5[Winterfall Firewater] at 5g60s20c
+1[Witherbark Coin] at 2g81s20c
+1[Witherbark Coin] at 2g83s10c
+4[Yellow Hakkari Bijou] at 8g31s25c
+4 x 1[Yellow Hakkari Bijou] at 9g30s5c
