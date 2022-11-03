@@ -499,3 +499,4 @@ void merge_auctions(std::map<std::string, std::set<Auction>>& auctions)
 		}
 	}
 }
+

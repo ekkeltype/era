@@ -43,8 +43,9 @@ void read_bargain_cfg()
 void find_bargains(const std::map<std::string, std::set<Auction>>& auctions)
 {
     read_bargain_cfg();
-    
-    std::filesystem::path outpath ("C:\\Users\\Walter Qvam\\era");
+    std::string user_profile = std::getenv("userprofile");
+    std::filesystem::path outpath(user_profile);
+    outpath /= "era";
     std::ofstream out(outpath / "out.html");
     std::string head = R"(<!DOCTYPE html>
       <html>

@@ -514,8 +514,6 @@ int git_upload();
 
 int main()
 {
-   // int err = ftp_upload();
-
     time_t szClock = 0;
     time(&szClock);
     tm* newTime = localtime(&szClock);
