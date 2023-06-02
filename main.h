@@ -58,6 +58,7 @@ struct Auction
 };
 bool operator<(const Auction& a, const Auction& b);
 void processReport();
+std::string urlEncode(const std::string& url);
 
 void processRaidReport(const std::string& report);
 void processRaidReportFN(const char* report);
@@ -82,6 +83,7 @@ void buildItemDb();
 extern std::map<unsigned, Item> wowItemDb;
 
 Item getItemInfo(unsigned itemId);
+bool isBis(const Item& item);
 unsigned getBlizzardSlotId(const std::string& slotName);
 std::string getBlizzardSlot(unsigned slotId);
 std::string getFriendlySlotName(const std::string& slot);

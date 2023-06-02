@@ -117,6 +117,11 @@ void processRaidReport(const std::string& report, Player& player)
 
     for (auto encounter : j)
     {
+        if (!encounter.contains("encounterName"))
+        {
+            std::cout << "skipping invalid encounter for report " << report << "\n";
+            continue;
+        }
         std::string boss = encounter["encounterName"];
 
         if (player.pclass.empty())
@@ -247,7 +252,7 @@ extern std::vector<Player> characters;
 
 std::vector<std::string> getGuildReports(const std::string& guildName, const std::string& server)
 {
-    std::string request = "https://vanilla.warcraftlogs.com/v1/reports/guild/" + guildName + "/" + server + "/EU?api_key=" + api_key;
+    std::string request = "https://vanilla.warcraftlogs.com/v1/reports/guild/" + urlEncode(guildName) + "/" + server + "/EU?api_key=" + api_key;
 
     std::string reportsJson = getUrlContent(request);
 
@@ -356,7 +361,7 @@ void exportItemData()
 {
     std::ofstream out(csv_item_target, std::ios::app);
     const std::string delim = ";";
-    // Item; Item Id; Quality; Item level; Slot; link
+    // Item; Item Id; Quality; Item level; Slot; wowhead link ; icon name; icon url; [is bis?]
 
     const std::string imgur = "https://wow.zamimg.com/images/wow/icons/large/";
 
@@ -379,6 +384,8 @@ void exportItemData()
         itemcsv += item.icon;
         itemcsv += delim;
         itemcsv += imgur + item.icon;
+        itemcsv += delim;
+        itemcsv += (isBis(item) ? "1" : "0");
         out << itemcsv << "\n";
     }
 }
@@ -398,10 +405,17 @@ std::string loadParses(const Player& player)
         {
             std::cout << "Loading cached parses for player " << player.name << ", updated " << age << " ago\n";
             std::ifstream f(cachefile);
-            std::string json((std::istreambuf_iterator<char>(f)),
+            std::string cachedJson((std::istreambuf_iterator<char>(f)),
                 std::istreambuf_iterator<char>());
 
-            return json;
+            auto test = nlohmann::json::parse(cachedJson,nullptr,false, false);
+            if (test.is_discarded())
+            {
+                std::cout << "Discarding cached parses for player " << player.name << ", invalid data\n";
+                    return std::string();
+            }
+
+            return cachedJson;
         }
         else
         {
@@ -414,12 +428,16 @@ std::string loadParses(const Player& player)
 }
 void storeParses(const std::string& report, const Player& player)
 {
-    auto cachefile = std::string("cache/parses/") + std::to_string(player.id) + ".json";
+    std::filesystem::create_directory("cache");
+    std::filesystem::create_directory("cache/parses");
+
+    std::filesystem::path cachefile(std::string("cache/parses/") + std::to_string(player.id) + ".json");
 
     if (!report.empty() && report.size() > 300)
     {
         std::ofstream f(cachefile);
         f << report;
+        std::cout << "Storing parses in " << std::filesystem::absolute(cachefile) << "\n";
     }
 
 }
@@ -507,21 +525,18 @@ int ah_main()
     find_bargains(all_auctions);
     find_crafts(all_auctions);
     csvExportAuctions(all_auctions, 5233, 666);
-    //system("pause");
+    system("pause");
     return 0;
 }
-int git_upload();
 
 int main()
 {
-   // int err = ftp_upload();
-
     time_t szClock = 0;
     time(&szClock);
     tm* newTime = localtime(&szClock);
     std::cout << asctime(newTime) << "\n";
 
-    return ah_main();
+  //  return ah_main();
   //  buildItemDb();
   //  return 0;
 
@@ -529,7 +544,7 @@ int main()
 
     auto reports = getGuildReports("Fun Police", "Noggenfogger"); //  getStoredReports(); 
 
-    constexpr int reportLimit = 160; // limit to only this many reports
+    constexpr int reportLimit = 10; // limit to only this many reports
     
     for (unsigned int i = 0; i < reportLimit; ++i)
     {

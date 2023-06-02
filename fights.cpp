@@ -43,7 +43,7 @@ void getFightCharacters(  const std::string& report)
 std::vector<std::string> getPlayerReportApi(const Player& player)
 {
   std::string base_url = "https://vanilla.warcraftlogs.com/v1/parses/character/";
-  base_url += player.name;
+  base_url += urlEncode(player.name);
   base_url += "/";
   base_url += player.server;
   base_url += "/";
@@ -61,8 +61,7 @@ std::vector<std::string> getPlayerReportApi(const Player& player)
 
   for (int zone = 2006; zone >= 2000; --zone)
   {
-      std::string apiuri = "https://vanilla.warcraftlogs.com/v1/parses/character/" + player.name + "/" + player.server +
-          "/eu?metric=dps&zone=" + std::to_string(zone) + "&includeCombatantInfo=true&api_key=" + api_key;
+      std::string apiuri = base_url + "eu?metric=dps&zone=" + std::to_string(zone) + "&includeCombatantInfo=true&api_key=" + api_key;
 //      player.name, player.server, zone, api_key);
     result.push_back(apiuri);
 

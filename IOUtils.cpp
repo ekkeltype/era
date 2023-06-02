@@ -2,6 +2,65 @@
 #include <string>
 #include <chrono>
 #include <filesystem>
+#include <array>
+constexpr size_t ArraySize = 256;
+
+consteval std::array<bool, ArraySize> getEncodeTable()
+{
+    std::array<bool, ArraySize> result = {};
+
+    // Set characters that don't need URL encoding to true
+    for (char c = 'A'; c <= 'Z'; ++c) {
+        result[c] = true;
+    }
+
+    for (char c = 'a'; c <= 'z'; ++c) {
+        result[c] = true;
+    }
+
+    for (char c = '0'; c <= '9'; ++c) {
+        result[c] = true;
+    }
+
+    result['-'] = true;
+    result['_'] = true;
+    result['.'] = true;
+    result['~'] = true;
+    return result;
+}
+
+constexpr std::array<bool, ArraySize> EncodeTable = getEncodeTable();
+
+std::string urlEncode(const std::string& url)
+{
+    std::string result;
+
+    constexpr std::string_view hex{ "0123456789ABCDEF" };
+
+
+    for (auto ch : url)
+    {
+        unsigned char idx = ch;
+        if (EncodeTable[idx])
+        {
+            result.push_back(ch);
+        }
+        else
+        {
+            char high = hex[idx >> 4];
+            char low = hex[idx & 0x0F];
+            result.push_back('%');
+            result.push_back(high);
+            result.push_back(low);
+
+        }
+
+    }
+    return result;
+}
+
+
+
 
 
 std::string getProcessOutput(const std::string& cmdline)
@@ -83,6 +142,7 @@ std::string getProcessOutput(const std::string& cmdline)
 
 std::string getUrlContent(const std::string& url)
 {
+    
     std::string call = "curl -s ";
     call += char(34);
     call += url;

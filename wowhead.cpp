@@ -115,6 +115,36 @@ void buildItemDb()
 	return;
 }
 
+bool isBis(const Item& item)
+{
+	static std::set<std::string> bis = {
+		"Lionheart Helm",
+		"Helm of Endless Rage",
+		"Conqueror's Spaulders",
+		"Ghoul Skin Tunic",
+		"Shroud of Dominion",
+		"Cloak of the Fallen God",
+		"Plated Abomination Ribcage",
+		"Wristguards of Vengeance",
+		"Hive Defiler's Wristguards",
+		"Gauntlets of Annihilation",
+		"Legplates of Carnage",
+		"Band of Unnatural Forces",
+		"Quick Strike Ring",
+		"Chromatic Boots",
+		"Kiss of the Spider",
+		"Mark of the Champion",
+		"Slayer's Crest",
+		"Gressil, Dawn of Ruin",
+		"The Hungering Cold",
+		"Claw of the Frost Wyrm",
+		"Nerubian Slavemaker"
+	};
+
+	return bis.contains(item.name);
+}
+
+
 void load_oauth()
 {
 	std::string oauth_file = "oauth.json";
@@ -125,8 +155,6 @@ void load_oauth()
 
 	std::ifstream f(oauth_file);
 	std::string rawJson((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
-	if (rawJson.empty())
-		return;
 	auto j = json::parse(rawJson);
 
 	if (j.contains("access_token"))
@@ -155,6 +183,8 @@ void get_oauth_key(const std::string& client, const std::string& secret)
 	}
 
 }
+
+
 
 std::string getWowApiInfo(unsigned itemId)
 {
@@ -219,6 +249,7 @@ std::string trim(const std::string& str)
 	auto end = str.begin() + str.size() - hasFrontQ - hasBackQ;
 
 	return std::string(begin, end);
+
 }
 
 
@@ -332,6 +363,7 @@ void csvExportAuctions(const std::map<std::string, std::set<Auction>>& auctions,
 		}
 	}
 	out << csv;
+
 }
 
 
@@ -365,11 +397,7 @@ std::map<std::string, std::set<Auction>> getAHInfo(unsigned realmId, unsigned ah
 		json = getUrlContent(request_uri);
 		if (json.empty())
 		{
-			std::string oauth_bat = "update_oauth.bat";
-			std::cout << "running " << oauth_bat << "\n";
-			std::system(oauth_bat.data());
-
-			std::cout << "Update your oauth token file and press enter to continue\n";
+			std::cout << "Update your oauth token file and press enter to continue";
 			std::system("pause");
 
 			load_oauth();
