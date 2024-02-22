@@ -142,10 +142,12 @@ std::string getProcessOutput(const std::string& cmdline)
 
 std::string getUrlContent(const std::string& url)
 {
-    
+    std::string tmp = url;
+   // std::replace(tmp.begin(), tmp.end(), ' ', '_');
+   
     std::string call = "curl -s ";
     call += char(34);
-    call += url;
+    call += tmp;
     call += char(34);
     return getProcessOutput(call);
 }

@@ -1,3 +1,4 @@
+#define NOMINMAX 1
 #include "json.h"
 #include <filesystem>
 #include <iostream>
@@ -13,6 +14,7 @@
 #include "string"
 #include "windows.h"
 #include "main.h"
+#include "colors.h"
 
 using json = nlohmann::json;
 const char* slots[] = { "head","neck","shoulder","shirt","chest","waist","legs","feet","wrist","hands","ring","ring2","trinket","trinket2","back","main","off","ranged" };
@@ -494,6 +496,70 @@ void find_flips(const std::map<std::string, std::set<Auction>>& auctions)
 }
 void read_bargain_cfg();
 void find_crafts(const std::map<std::string, std::set<Auction>>& auctions);
+void load_oauth();
+int price_check_main(const std::string& itemname)
+{
+    load_oauth();
+    unsigned id = getItemId(itemname);
+    if (id == 0)
+    {
+        std::cout << "the item was not found\n";
+        return 0;
+    }
+    Item item = getItemInfo(id);
+    
+
+    const unsigned threshold = 40; // how many items to check before aborting search
+
+    std::cout << "searching for: "; 
+    printColoredString(item.quality, "[" + itemname + "]");
+    std::cout << "\n";
+    system("md cache");
+    auto horde_auctions = getAHInfo(5233, 6, true); // Horde
+    auto ally_auctions = getAHInfo(5233, 2, true); // Alliance
+    decltype(horde_auctions) all_auctions(horde_auctions);
+    for (auto it : ally_auctions)
+    {
+        all_auctions[it.first].insert(it.second.begin(), it.second.end());
+    }
+    std::cout << "merging auctions\n";
+    merge_auctions(all_auctions);
+    auto find = all_auctions.find(itemname);
+    if (find == all_auctions.end())
+    {
+        std::cout << itemname << " not seen\n";
+        return 0;
+
+    }
+
+    // found entry for item, check price threshold
+//        5 x 1 
+
+    unsigned totalNumSeen = 0;
+    for (auto& auction : find->second)
+    {
+        unsigned bidPerItem = auction.bid / auction.quantity;
+        unsigned buyoutPerItem = auction.buyout / auction.quantity;
+        if (auction.repeats > 0)
+            std::cout << auction.repeats << " x ";
+        std::cout << auction.quantity;
+        totalNumSeen += auction.quantity * std::max(auction.repeats, 1u);
+        ItemQuality qual = get_quality(auction.quality);
+        printColoredString(qual, "[" + auction.itemName + "]");
+        std::cout << " listed at " << readable(bidPerItem) << ", " << auction.readable_buyout_per_item
+            << " (" << auction.auction_house << ")" << "\n";
+
+        if (totalNumSeen > threshold)
+            return 0;
+        
+    }
+
+    return 0;
+
+}
+
+
+
 int ah_main()
 {
     //std::cout << "Enter client id:";
@@ -529,14 +595,24 @@ int ah_main()
     return 0;
 }
 
-int main()
+int main(int argc, char**argv)
 {
     time_t szClock = 0;
     time(&szClock);
     tm* newTime = localtime(&szClock);
     std::cout << asctime(newTime) << "\n";
+    std::string param(GetCommandLineA());
+    
+    if (argc > 1)
+    {
+        param = param.substr(strlen(argv[0]) + 2);
+        return price_check_main(param);
 
-  //  return ah_main();
+    }
+
+    return price_check_main("Large Brilliant Shard");
+
+    return ah_main();
   //  buildItemDb();
   //  return 0;
 

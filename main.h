@@ -65,7 +65,7 @@ void processRaidReportFN(const char* report);
 bool operator<(const Item& a, const Item& b);
 bool operator==(const Item& a, const Item& b);
 bool operator!=(const Item& a, const Item& b);
-int main();
+//int main();
 std::ostream& operator<<(std::ostream& os, const Item& item);
 void getFightCharactersFN(const char* reportFN);
 void getFightCharacters(const std::string& report);
@@ -75,6 +75,7 @@ std::string getProcessOutput(const std::string& cmdline);
 
 std::string getUrlContent(const std::string& url);
 std::string getWowApiInfo(unsigned itemId);
+unsigned getItemId(const std::string& itemname);
 extern std::string api_key;
 void get_oauth_key(const std::string& client, const std::string& secret);
 

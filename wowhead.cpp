@@ -84,8 +84,6 @@ Item getItemInfo(unsigned itemId)
 	{
 		return item;
 	}
-	if (!j["is_equippable"])
-		return item; // ignore unequippable items
 
 	item.name = j["name"];
 	item.ilvl = j["level"];
@@ -93,11 +91,16 @@ Item getItemInfo(unsigned itemId)
 	std::string qualityString = j["quality"]["name"];
 	qualityString[0] = std::tolower(qualityString[0]);
 	item.quality = get_quality(qualityString);
-	item.slotName = j["inventory_type"]["type"];
 	item.id = itemId;
-	
-	if(item.slotName != "RANGEDRIGHT")
-		slotNames[item.slotName] = j["inventory_type"]["name"];
+
+	if (j["is_equippable"])
+	{
+		item.slotName = j["inventory_type"]["type"];
+
+		if (item.slotName != "RANGEDRIGHT")
+			slotNames[item.slotName] = j["inventory_type"]["name"];
+	}
+
 
 	return item;
 }
@@ -184,7 +187,71 @@ void get_oauth_key(const std::string& client, const std::string& secret)
 
 }
 
+unsigned getItemId(const std::string& itemname)
+{
+	std::string cachefile("cache/itemids.json");
+	nlohmann::json cache;
+	if (std::filesystem::exists(cachefile))
+	{
+		std::ifstream f(cachefile);
+		std::string raw_json((std::istreambuf_iterator<char>(f)),
+			std::istreambuf_iterator<char>());
 
+		cache = nlohmann::json::parse(raw_json.begin(), raw_json.end());
+
+		if (cache.contains(itemname))
+			return cache[itemname];
+	}
+
+	// try to look it up
+
+	std::string uri = "https://us.api.blizzard.com/data/wow/search/item?namespace=static-classic1x-us&name.en_US=" + urlEncode(itemname) + "&locale=en_US&access_token=" + oauth_token;
+
+	std::string result = getUrlContent(uri);
+	if (result.size() > 5)
+	{
+		auto j = nlohmann::json::parse(result.begin(), result.end());
+		if (j["code"] == 429)
+		{
+			std::cout << "rate limit exceeded\n";
+			return 0;
+		}
+
+		if (j["code"] == 404 || j["pageSize"] == 0)
+			std::cout << "item does not exist\n";
+		else if (j["pageSize"] >= 1)
+		{
+			unsigned foundId = 0;
+			for (auto result : j["results"])
+			{
+				unsigned id = result["data"]["id"];
+				std::string canonicalname = result["data"]["name"]["en_US"];
+				cache[canonicalname] = id;
+
+				if (canonicalname == itemname)
+					foundId = id;
+			}
+
+			std::ofstream f(cachefile);
+			f << cache;
+			return foundId;
+		}
+
+	}
+	return 0;
+
+
+
+
+// 403: "https://us.api.blizzard.com/data/wow/search/item?namespace=static-us=_Large_Brilliant_Shard&locale=en_US&access_token=USxxxxxxxxxxxxxxx"
+//		 https://us.api.blizzard.com/data/wow/search/item?namespace=static-us&name.en_US=Thunderfury&orderby=id&_page=1&access_token=USxxxxxxxxxxxxxxxxx
+
+
+
+
+
+
+}
 
 std::string getWowApiInfo(unsigned itemId)
 {
@@ -527,4 +594,3 @@ void merge_auctions(std::map<std::string, std::set<Auction>>& auctions)
 		}
 	}
 }
-
